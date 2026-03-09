@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suman Pokhrel · Full Stack & React Native Developer</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f6f9fc;
+      color: #13294b;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 4px 20px rgba(0, 20, 40, 0.08);
+      z-index: 100;
+      padding: 16px 0;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(145deg, #0b2b5c, #1d4ed8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #1e293b;
+      font-size: 1.05rem;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 3px;
+      bottom: -6px;
+      left: 0;
+      background: #1d4ed8;
+      border-radius: 6px;
+      transition: width 0.25s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-links a:hover {
+      color: #1d4ed8;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: #0b2b5c;
+      cursor: pointer;
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      padding: 60px 0 40px;
+    }
+
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1 1 400px;
+    }
+
+    .hero-content h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .hero-highlight {
+      background: linear-gradient(120deg, #1e3a8a, #2563eb);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #334155;
+      margin-bottom: 24px;
+      border-left: 6px solid #2563eb;
+      padding-left: 20px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin: 32px 0;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0f2b5c;
+    }
+
+    .stat-label {
+      color: #475569;
+      font-weight: 500;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.25s;
+      box-shadow: 0 8px 18px rgba(0, 35, 70, 0.1);
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .btn-primary {
+      background: #1d4ed8;
+      color: white;
+      box-shadow: 0 8px 18px #1d4ed855;
+    }
+
+    .btn-primary:hover {
+      background: #1e3a8a;
+      transform: scale(1.02);
+    }
+
+    .btn-outline {
+      border: 2px solid #1d4ed8;
+      color: #1d4ed8;
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: #1d4ed8;
+      color: white;
+    }
+
+    .hero-avatar {
+      flex: 1 1 300px;
+      background: linear-gradient(145deg, #b1c9ff, #d9e6ff);
+      border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 30px 40px -20px #1e3a8a;
+    }
+
+    .hero-avatar i {
+      font-size: 12rem;
+      color: #0b2b5c;
+      opacity: 0.9;
+    }
+
+    /* Sections */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 100px;
+      height: 5px;
+      background: #fbbf24;
+      position: absolute;
+      bottom: -16px;
+      left: 0;
+      border-radius: 8px;
+    }
+
+    /* About */
+    .about-grid {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .about-text {
+      flex: 2 1 400px;
+      font-size: 1.15rem;
+      color: #1f2937;
+    }
+
+    .about-highlight {
+      background: #e6f0ff;
+      padding: 28px;
+      border-radius: 32px;
+      flex: 1 1 280px;
+      box-shadow: 0 12px 26px -8px #a0c0ff;
+    }
+
+    .about-highlight h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      color: #0b2b5c;
+    }
+
+    .badge {
+      background: #fbbf24;
+      color: #0b2b5c;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 50px;
+      display: inline-block;
+    }
+
+    /* Skills - UPDATED with user's list */
+    .skills-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 40px 0 20px;
+    }
+
+    .skill-tag {
+      background: white;
+      border-radius: 60px;
+      padding: 10px 28px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 47, 100, 0.08);
+      border: 1px solid #dbeafe;
+      transition: all 0.15s;
+    }
+
+    .skill-tag:hover {
+      background: #1d4ed8;
+      color: white;
+      border-color: #1d4ed8;
+      transform: translateY(-3px);
+    }
+
+    /* Projects grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .project-card {
+      background: white;
+      border-radius: 36px;
+      padding: 28px 20px 30px;
+      box-shadow: 0 18px 30px -12px rgba(0, 50, 120, 0.15);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: scale(1.01) translateY(-10px);
+      box-shadow: 0 32px 50px -16px #1e4fd0;
+    }
+
+    .project-icon {
+      font-size: 3.4rem;
+      margin-bottom: 20px;
+      background: #e6f0ff;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      color: #1d4ed8;
+    }
+
+    .project-card h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .project-desc {
+      color: #334155;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .project-tags span {
+      background: #eef2ff;
+      border-radius: 30px;
+      padding: 5px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #1e3a8a;
+    }
+
+    .card-link {
+      text-decoration: none;
+      font-weight: 700;
+      color: #1d4ed8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    /* Experience */
+    .exp-card {
+      background: white;
+      border-radius: 48px;
+      padding: 36px;
+      box-shadow: 0 25px 35px -16px #2563eb30;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .exp-icon {
+      background: #fbbf24;
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #0b2b5c;
+    }
+
+    .exp-desc h3 {
+      font-size: 2rem;
+    }
+
+    /* Contact form */
+    .contact-form {
+      background: white;
+      border-radius: 48px;
+      padding: 48px;
+      box-shadow: 0 30px 40px -20px #152b5e;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .form-group {
+      flex: 1 1 250px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 16px 24px;
+      border: 2px solid #d9e6ff;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: 0.2s;
+      background: #f9fcff;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #1d4ed8;
+      box-shadow: 0 0 0 4px #93c5fd;
+    }
+
+    textarea {
+      border-radius: 32px;
+      resize: vertical;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .social-links a {
+      background: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #1d4ed8;
+      box-shadow: 0 8px 18px #a5c9ff;
+      transition: 0.2s;
+    }
+
+    .social-links a:hover {
+      background: #1d4ed8;
+      color: white;
+      transform: scale(1.08);
+    }
+
+    /* Footer */
+    footer {
+      background: #0b2b5c;
+      color: white;
+      padding: 32px 0;
+      text-align: center;
+      margin-top: 80px;
+    }
+
+    @media (max-width: 720px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container">
+      <div class="logo">Suman Pokhrel</div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>
+          <span class="hero-highlight">Suman Pokhrel</span><br>
+          Full Stack · React Native & PHP Developer
+        </h1>
+        <div class="hero-subtitle">
+          <i class="fas fa-map-pin" style="color:#2563eb;"></i> 
+          BIM Graduate (Lumbini ICT College) · Developer at Suppo Technology
+        </div>
+        <p style="font-size: 1.1rem; margin-bottom: 32px; color: #1e293b;">
+          I build web & mobile apps using <strong>React, React Native, Python, PHP, MySQL</strong> and craft pixel-perfect interfaces. 
+          Creator of FoodExpress, FoodCab, and multiple corporate websites.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-item"><span class="stat-number">10+</span><span class="stat-label">projects shipped</span></div>
+          <div class="stat-item"><span class="stat-number">4</span><span class="stat-label">tech stacks</span></div>
+          <div class="stat-item"><span class="stat-number">'26</span><span class="stat-label">BIM graduate</span></div>
+        </div>
+        <div class="btn-group">
+          <a href="#projects" class="btn btn-primary"><i class="fas fa-arrow-down"></i> View work</a>
+          <a href="#contact" class="btn btn-outline"><i class="fas fa-comment"></i> Hire me</a>
+        </div>
+      </div>
+      <div class="hero-avatar">
+        <i class="fas fa-user-astronaut"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT + EDUCATION -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title"><span>About</span> me</h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p style="margin-bottom: 20px;">I'm Suman Pokhrel, a <strong>Bachelor of Information Management (BIM)</strong> graduate from <strong>Lumbini ICT College</strong> (2026). My passion is turning ideas into full‑stack applications and smooth mobile experiences. I work daily with <strong>React, React Native, Python, PHP, MySQL, HTML, CSS, JavaScript</strong> – and I love every part of the process.</p>
+          <p>At <strong>Suppo Technology Pvt. Ltd.</strong>, I develop internal tools, websites, and also handle graphic design. I believe clean code and thoughtful design can solve real problems.</p>
+        </div>
+        <div class="about-highlight">
+          <h3><i class="fas fa-graduation-cap"></i> BIM</h3>
+          <p>Lumbini ICT College · 2022–2026</p>
+          <p class="badge">Information Management + Dev</p>
+          <p style="margin-top: 24px;"><i class="fas fa-trophy" style="color: #fbbf24;"></i> Thesis on food delivery adoption</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS (exactly as user specified) -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2 class="section-title"><span>My</span> tech stack</h2>
+      <div class="skills-cloud">
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">React Native</span>
+        <span class="skill-tag">MySQL</span>
+        <span class="skill-tag">PHP</span>
+        <!-- additional related tags to fill out -->
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Firebase</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">REST APIs</span>
+      </div>
+      <p style="text-align: center; margin-top: 40px; color: #2c3e50;"><i class="fas fa-check-circle" style="color: #1d4ed8;"></i> I speak these languages fluently – both human and machine.</p>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title"><span>Selected</span> projects</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-pizza-slice"></i></div>
+          <h3>FoodExpress App</h3>
+          <div class="project-desc">On‑demand food delivery with live tracking, restaurant dashboard & wallet (React Native + Node).</div>
+          <div class="project-tags"><span>React Native</span><span>MySQL</span><span>Stripe</span></div>
+          <a href="#" class="card-link">Case study <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-taxi"></i></div>
+          <h3>FoodCab App</h3>
+          <div class="project-desc">Cab + food hybrid: order meals during ride, real‑time tracking (React Native, PHP, MySQL).</div>
+          <div class="project-tags"><span>React Native</span><span>PHP</span><span>Google Maps</span></div>
+          <a href="#" class="card-link">Case study <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-brush"></i></div>
+          <h3>Suppo Branding</h3>
+          <div class="project-desc">Complete visual identity, social media creatives & corporate graphics for Suppo Technology.</div>
+          <div class="project-tags"><span>figma</span><span>Photoshop</span></div>
+          <a href="#" class="card-link">Portfolio <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-laptop-code"></i></div>
+          <h3>Company Websites</h3>
+          <div class="project-desc">Responsive sites for finance & retail, built with React, PHP, MySQL.</div>
+          <div class="project-tags"><span>React</span><span>PHP</span><span>MySQL</span></div>
+          <a href="#" class="card-link">Live demo <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
+          <h3>E‑commerce Store</h3>
+          <div class="project-desc">Full‑stack online store with cart, PayPal, and admin panel (Python/Django or PHP).</div>
+          <div class="project-tags"><span>Python</span><span>Django</span><span>MySQL</span></div>
+          <a href="#" class="card-link">Details <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="project-card">
+          <div class="project-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>EcoCart App</h3>
+          <div class="project-desc">Sustainable shopping list & delivery app built with React Native + Laravel.</div>
+          <div class="project-tags"><span>React Native</span><span>PHP</span><span>MySQL</span></div>
+          <a href="#" class="card-link">More <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section">
+    <div class="container">
+      <div class="exp-card">
+        <div class="exp-icon"><i class="fas fa-briefcase"></i></div>
+        <div style="flex:1">
+          <h3>Full Stack Developer & Graphic Designer</h3>
+          <p style="font-size: 1.3rem; color:#1d4ed8; margin-bottom: 8px;">Suppo Technology Pvt. Ltd. · 2024 – present</p>
+          <p>Developing internal dashboards, maintaining company website, and creating marketing collateral. Built 3 production apps using React, PHP, MySQL.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT with updated email & phone -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title"><span>Get</span> in touch</h2>
+      <div class="contact-form">
+        <div style="text-align: center; margin-bottom: 32px;">
+          <h3 style="font-size: 2rem;">Let’s create something</h3>
+          <p style="color: #2c3e50; font-size: 1.2rem;">
+            <i class="fas fa-envelope" style="color:#1d4ed8;"></i> spokhrel681@gmail.com &nbsp; | &nbsp; 
+            <i class="fas fa-phone-alt" style="color:#1d4ed8;"></i> +977 9846605379
+          </p>
+        </div>
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group"><input type="text" placeholder="Your name" required></div>
+            <div class="form-group"><input type="email" placeholder="Email address" required></div>
+          </div>
+          <div class="form-group"><input type="text" placeholder="Subject (e.g., project inquiry)"></div>
+          <div class="form-group"><textarea rows="5" placeholder="Tell me about your idea..."></textarea></div>
+          <div style="text-align: right;">
+            <button type="submit" class="btn btn-primary" style="border: none; cursor: pointer;"><i class="fas fa-paper-plane"></i> Send message</button>
+          </div>
+        </form>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-behance"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Suman Pokhrel — BIM (Lumbini ICT College) · spokhrel681@gmail.com · +977 9846605379</p>
+  </footer>
+
+  <script>
+    // Contact form demo
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thanks for reaching out! Suman will reply soon at spokhrel681@gmail.com (demo).');
+      this.reset();
+    });
+
+    // Mobile menu toggle simulation (just a friendly alert)
+    const toggle = document.querySelector('.menu-toggle');
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        alert('Navigation: Home, About, Skills, Projects, Contact — fully responsive. Menu would slide in on mobile.');
+      });
+    }
+  </script>
+</body>
+</html>
